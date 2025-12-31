@@ -29,3 +29,31 @@ test("breakEvenYear returns year or null", () => {
     const year = breakEvenYear(a, b, 0.4, 50);
     expect(year).not.toBeNull();
 });
+
+
+test("compareProducts tie-break: if totals equal, A is chosen (<= not <)", () => {
+    const a = { name: "A", purchasePrice: 100, kwhPerUse: 1, usesPerWeek: 1 };
+    const b = { name: "B", purchasePrice: 100, kwhPerUse: 1, usesPerWeek: 1 };
+
+    const res = compareProducts(a, b, 0.5, 10);
+    expect(res.cheaper).toBe("A");
+    expect(res.diff).toBe(0);
+});
+
+test("compareProducts diff is absolute difference (not sum)", () => {
+    const a = { name: "A", purchasePrice: 100, kwhPerUse: 1, usesPerWeek: 1 };
+    const b = { name: "B", purchasePrice: 200, kwhPerUse: 1, usesPerWeek: 1 };
+
+    const res = compareProducts(a, b, 0, 1);
+    expect(res.aTotal).toBe(100);
+    expect(res.bTotal).toBe(200);
+    expect(res.diff).toBe(100);
+});
+
+test("breakEvenYear returns the first year where costs flip", () => {
+    const a = { name: "A", purchasePrice: 0, kwhPerUse: 10, usesPerWeek: 1 };
+    const b = { name: "B", purchasePrice: 300, kwhPerUse: 0, usesPerWeek: 1 };
+
+
+    expect(breakEvenYear(a, b, 1, 10)).toBe(1);
+});
