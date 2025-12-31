@@ -1,0 +1,3 @@
+scc not found. Install it:
+- Windows: choco install scc
+- Or download from https://github.com/boyter/scc/releases
